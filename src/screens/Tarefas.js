@@ -79,7 +79,7 @@ export function TarefasScreen({navigation}) {
 
     try {
       const response = await axios.get(API_URL);
-      console.log(response)
+
       setTarefas(response.data.saved); // Salva o JSON no estado
     } catch (error) {
       setTarefas('')

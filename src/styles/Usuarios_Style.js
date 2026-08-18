@@ -76,7 +76,7 @@ export const styles = StyleSheet.create({
   
   list: {
     paddingVertical: 10,
-    height: 100,
+    height: 1,
     paddingHorizontal: 16,
   },
   editButtons: {

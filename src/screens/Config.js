@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, FlatList, ActivityIndicator, SafeAreaView, TouchableOpacity, Image, TextInput} from 'react-native';
+import { StyleSheet, Text, View, FlatList, ActivityIndicator, ScrollView, SafeAreaView, TouchableOpacity, Image, TextInput} from 'react-native';
 
 import axios from 'axios';
 
@@ -52,31 +52,33 @@ export function ConfigScreen({navigation}) {
     <SafeAreaView style={styles.container}>
       <TopBar title={"Configurações"}></TopBar>
 
-      <View style={styles.configContainer}>
-        <Text style={styles.configText}>Bem-vindo, {username}!</Text>
-        <Image
-          source={require('../assets/images/coruja.png')}
-          style={styles.perfilImg}
-        />
+      <ScrollView style={styles.scrollContainer}>
+        <View style={styles.configContainer}>
+          <Text style={styles.configText}>Bem-vindo, {username}!</Text>
+          <Image
+            source={require('../assets/images/coruja.png')}
+            style={styles.perfilImg}
+          />
 
-        <View style={styles.configButtons}>
-          <TouchableOpacity style={styles.tarefaButton} onPress={() => navigation.navigate("Tarefas")}>
-            <Text style={styles.tarefaButtonText}>Ver suas tarefas</Text>
-          </TouchableOpacity>
+          <View style={styles.configButtons}>
+            <TouchableOpacity style={styles.tarefaButton} onPress={() => navigation.navigate("Tarefas")}>
+              <Text style={styles.tarefaButtonText}>Ver suas tarefas</Text>
+            </TouchableOpacity>
 
-          <TouchableOpacity style={styles.creditosButton} onPress={() => navigation.navigate("Devs")}>
-            <Text style={styles.creditosButtonText}>Créditos</Text>
-          </TouchableOpacity>
+            <TouchableOpacity style={styles.creditosButton} onPress={() => navigation.navigate("Devs")}>
+              <Text style={styles.creditosButtonText}>Créditos</Text>
+            </TouchableOpacity>
 
-          <TouchableOpacity style={styles.logoutButton} onPress={() => logout(navigation)}>
-            <Text style={styles.logoutButtonText}>Sair</Text>
-          </TouchableOpacity>
+            <TouchableOpacity style={styles.logoutButton} onPress={() => logout(navigation)}>
+              <Text style={styles.logoutButtonText}>Sair</Text>
+            </TouchableOpacity>
 
-          <TouchableOpacity style={styles.deleteButton} onPress={() => handleDelete()}>
-            <Text style={styles.deleteButtonText}>Excluir conta</Text>
-          </TouchableOpacity>
+            <TouchableOpacity style={styles.deleteButton} onPress={() => handleDelete()}>
+              <Text style={styles.deleteButtonText}>Excluir conta</Text>
+            </TouchableOpacity>
+          </View>
         </View>
-      </View>
+      </ScrollView>
 
       <NavBar navigation={navigation} />
     </SafeAreaView>

@@ -2,9 +2,14 @@ import {StyleSheet} from 'react-native';
 
 export const styles = StyleSheet.create({
     container: {
-        flex: 1
+        flex: 1,
+        paddingBottom: 100,
+    },
+    scrollContainer: {
+        height: 1
     },
     configContainer: {
+
         paddingVertical: 20,
         display: 'flex',
         alignItems: 'center',
