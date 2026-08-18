@@ -19,10 +19,9 @@ export const geralStyles = StyleSheet.create({
         display: 'flex',
         alignItems: 'center' ,
         flexDirection: 'column',
-        width: 70
+        width: '20%'
     },
     iconNavBarText: {
-
         color: '#2e2e2e',
         textAlign: 'center'
     },

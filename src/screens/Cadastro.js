@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, FlatList, ActivityIndicator, SafeAreaView, TouchableOpacity, Image, TextInput} from 'react-native';
+import { StyleSheet, Text, View, FlatList, ScrollView, ActivityIndicator, SafeAreaView, TouchableOpacity, Image, TextInput} from 'react-native';
 
 import axios from 'axios';
 
@@ -66,56 +66,57 @@ export function CadastroScreen({navigation}) {
 
       <TopBar title={"Tarefas123"}></TopBar>
 
-      <View style={styles.innerForm}>
-            
-        <Text style={styles.boxTitle}>Nome e Sobrenome</Text>
-        <TextInput
-          onChangeText={novoTexto => setNome(novoTexto)}
-          defaultValue={nomeForm} 
-          style={styles.textBox}
-        />
+      <ScrollView style={styles.scrollContainer}>
+        <View style={styles.innerForm}>
+              
+          <Text style={styles.boxTitle}>Nome e Sobrenome</Text>
+          <TextInput
+            onChangeText={novoTexto => setNome(novoTexto)}
+            defaultValue={nomeForm} 
+            style={styles.textBox}
+          />
 
-        <Text style={styles.boxTitle}>Usuário</Text>
-        <TextInput
-          onChangeText={novoTexto => setUsuario(novoTexto)}
-          defaultValue={usuarioForm} 
-          style={styles.textBox}
-        />
+          <Text style={styles.boxTitle}>Usuário</Text>
+          <TextInput
+            onChangeText={novoTexto => setUsuario(novoTexto)}
+            defaultValue={usuarioForm} 
+            style={styles.textBox}
+          />
 
-        <Text style={styles.boxTitle}>Email</Text>
-        <TextInput
-          onChangeText={novoTexto => setEmail(novoTexto)}
-          defaultValue={emailForm} 
-          style={styles.textBox}
-        />
+          <Text style={styles.boxTitle}>Email</Text>
+          <TextInput
+            onChangeText={novoTexto => setEmail(novoTexto)}
+            defaultValue={emailForm} 
+            style={styles.textBox}
+          />
 
-        <Text style={styles.boxTitle}>Senha</Text>
-        <TextInput
-          onChangeText={novoTexto => setSenha(novoTexto)}
-          secureTextEntry={true}
-          defaultValue={senhaForm} 
-          style={styles.textBox}
-        />
-        <TouchableOpacity onPress={() => {navigation.navigate("Login")}}
-          style={styles.opcaoEntrada} 
-        >
-          <Text style={styles.opcaoEntradaText}>Já tenho uma conta</Text>
-        </TouchableOpacity>
+          <Text style={styles.boxTitle}>Senha</Text>
+          <TextInput
+            onChangeText={novoTexto => setSenha(novoTexto)}
+            secureTextEntry={true}
+            defaultValue={senhaForm} 
+            style={styles.textBox}
+          />
+          <TouchableOpacity onPress={() => {navigation.navigate("Login")}}
+            style={styles.opcaoEntrada} 
+          >
+            <Text style={styles.opcaoEntradaText}>Já tenho uma conta</Text>
+          </TouchableOpacity>
 
-        {errorMsg !== '' && (
-          <Text style={{ color: 'red', marginBottom: 10, textAlign: 'center' }}>
-            {errorMsg}
-          </Text>
-        )}
+          {errorMsg !== '' && (
+            <Text style={{ color: 'red', marginBottom: 10, textAlign: 'center' }}>
+              {errorMsg}
+            </Text>
+          )}
 
-        <TouchableOpacity onPress={() => {cadastrar()}}
-          style={styles.formButton} 
-        >
-          <Text style={styles.formButtonText}>Cadastrar</Text>
-        </TouchableOpacity>
+          <TouchableOpacity onPress={() => {cadastrar()}}
+            style={styles.formButton} 
+          >
+            <Text style={styles.formButtonText}>Cadastrar</Text>
+          </TouchableOpacity>
 
-      </View>
-
+        </View>
+      </ScrollView>
     </SafeAreaView>
   );
 }

@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, FlatList, ActivityIndicator, SafeAreaView, TouchableOpacity, Image, TextInput} from 'react-native';
+import { StyleSheet, Text, View, FlatList, ScrollView, ActivityIndicator, SafeAreaView, TouchableOpacity, Image, TextInput} from 'react-native';
 
 import axios from 'axios';
 
@@ -76,7 +76,7 @@ export function LoginScreen({navigation}) {
   return (
     <SafeAreaView style={styles.container}>
     <TopBar title={"Tarefas123"}></TopBar>
-
+    <ScrollView style={styles.scrollContainer}>
       <View style={styles.innerForm}>
 
         <Text style={styles.boxTitle}>Email</Text>
@@ -113,7 +113,7 @@ export function LoginScreen({navigation}) {
         </TouchableOpacity>
 
       </View>
-      
+    </ScrollView>
     </SafeAreaView>
   );
 }

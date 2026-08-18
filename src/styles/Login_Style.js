@@ -1,29 +1,13 @@
 import {StyleSheet} from 'react-native';
 
 export const styles = StyleSheet.create({
-    topBar: {
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: '70px',
-        backgroundColor: '#4c9dfa',
-        width: '100%',
-        marginBottom: 20,
-        paddingHorizontal: 30
-    },
 
-    innerTop2: {
-        display: 'flex',
-        alignItems: 'center',
-        width: '85%'
-    },
-    topBarText: {
-      fontFamily: 'Inter_700Bold',
-      color: 'white',
-      fontSize: '2rem'
+
+    scrollContainer: {
+        height: 1
     },
     
+
     container: {
         flex: 1
     },
@@ -35,7 +19,7 @@ export const styles = StyleSheet.create({
         paddingHorizontal: 20,
         display: 'flex',
         alignSelf: 'center',
-        marginBottom: 100,
+        marginBottom: 10,
         width: '90%',
         backgroundColor: 'white'
     },
