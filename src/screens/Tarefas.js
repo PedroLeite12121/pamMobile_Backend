@@ -30,14 +30,18 @@ export function TarefasScreen({navigation}) {
 
   const handleBeginUpdate = async (item) => {
     setEditing(item.idTarefa)
+
     setNomeTarefa(item.nome_da_tarefa)
     setTempoTarefa(item.tempo)
-    setRelevanciaTarefa(item.relevanciaTarefa)
-    setStatusTarefa(item.statusTarefa)
+    setRelevanciaTarefa(item.relevancia)
+    setStatusTarefa(item.status)
+
+    
   }
 
   const handleUpdate = async (item) => {
     if(!nomeTarefa || !tempoTarefa || !relevanciaTarefa || !statusTarefa){
+      console.log(nomeTarefa, tempoTarefa, relevanciaTarefa, statusTarefa)
       alert("Preencha todos os campos")
       return
     }
@@ -52,6 +56,7 @@ export function TarefasScreen({navigation}) {
       console.error("Erro ao atualizar tarefa:", error);
     } finally {
       setEditing(null);
+
       setRelevanciaTarefa('')
       setNomeTarefa('')
       setTempoTarefa('')

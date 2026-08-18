@@ -18,7 +18,10 @@ export const styles = StyleSheet.create({
         width: '90%',
 
     },
-
+    scrollContainer: {
+        height:1
+    },
+    
     textBox: {
         paddingHorizontal: 5,
         borderRadius: 5,

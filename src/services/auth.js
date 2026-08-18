@@ -9,7 +9,7 @@ export const getToken = async () => {
 	return await AsyncStorage.getItem("token");
 };
 
-export const logout = async () => {
+export const logout = async (navigation) => {
 	await AsyncStorage.removeItem("token");
 	navigation.navigate("Login");
 };

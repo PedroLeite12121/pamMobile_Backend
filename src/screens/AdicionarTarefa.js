@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, FlatList, ActivityIndicator, SafeAreaView,TouchableOpacity,Image,TextInput} from 'react-native';
+import { StyleSheet, Text, View, FlatList, ScrollView, ActivityIndicator, SafeAreaView,TouchableOpacity,Image,TextInput} from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 
 import axios from 'axios';
@@ -54,52 +54,53 @@ export function AddTarefasScreen({navigation}) {
 
       <TopBar title={"Tarefas"}></TopBar>
 
-      <View style={styles.innerForm}>
+      <ScrollView style={styles.scrollContainer}>
+        <View style={styles.innerForm}>
 
-        <Text style={styles.boxTitle}>Nome da tarefa</Text>
-        <TextInput
-            onChangeText={novoTexto => setNomeTarefa(novoTexto)}
-            defaultValue={nomeTarefa} 
+          <Text style={styles.boxTitle}>Nome da tarefa</Text>
+          <TextInput
+              onChangeText={novoTexto => setNomeTarefa(novoTexto)}
+              defaultValue={nomeTarefa} 
+              style={styles.textBox}
+          />
+          
+          <Text style={styles.boxTitle}>Relevância</Text>
+          <Picker
             style={styles.textBox}
-        />
-        
-        <Text style={styles.boxTitle}>Relevância</Text>
-        <Picker
-          style={styles.textBox}
-          selectedValue={relevanciaTarefa}
-          onValueChange={(itemValue) => setRelevanciaTarefa(itemValue)}
-        >
-          <Picker.Item label="Selecione a relevância..." value="" enabled={false} />
-          <Picker.Item label="Muito Importante" value="Muito Importante" />
-          <Picker.Item label="Importante" value="Importante" />
-          <Picker.Item label="Moderado" value="Moderado" />
-          <Picker.Item label="Pouco Importante" value="Pouco Importante" />
-        </Picker>
+            selectedValue={relevanciaTarefa}
+            onValueChange={(itemValue) => setRelevanciaTarefa(itemValue)}
+          >
+            <Picker.Item label="Selecione a relevância..." value="" enabled={false} />
+            <Picker.Item label="Muito Importante" value="Muito Importante" />
+            <Picker.Item label="Importante" value="Importante" />
+            <Picker.Item label="Moderado" value="Moderado" />
+            <Picker.Item label="Pouco Importante" value="Pouco Importante" />
+          </Picker>
 
-        <Text style={styles.boxTitle}>Tempo</Text>
-        <TextInput
-          onChangeText={novoTexto => setTempoTarefa(novoTexto)}
-          defaultValue={tempoTarefa} 
-          style={styles.textBox}
-        />
+          <Text style={styles.boxTitle}>Tempo</Text>
+          <TextInput
+            onChangeText={novoTexto => setTempoTarefa(novoTexto)}
+            defaultValue={tempoTarefa} 
+            style={styles.textBox}
+          />
 
-        <Text style={styles.boxTitle}>Status</Text>
-        <Picker
-          style={styles.textBox}
-          selectedValue={statusTarefa}
-          onValueChange={(itemValue) => setStatusTarefa(itemValue)}
-        >
-          <Picker.Item label="Selecione o status..." value="" enabled={false} />
-          <Picker.Item label="Concluída" value="Concluída" />
-          <Picker.Item label="Em Andamento" value="Em Andamento" />
-          <Picker.Item label="Pendente" value="Pendente" />
-        </Picker>
+          <Text style={styles.boxTitle}>Status</Text>
+          <Picker
+            style={styles.textBox}
+            selectedValue={statusTarefa}
+            onValueChange={(itemValue) => setStatusTarefa(itemValue)}
+          >
+            <Picker.Item label="Selecione o status..." value="" enabled={false} />
+            <Picker.Item label="Concluída" value="Concluída" />
+            <Picker.Item label="Em Andamento" value="Em Andamento" />
+            <Picker.Item label="Pendente" value="Pendente" />
+          </Picker>
 
-        <TouchableOpacity style={styles.formButton} onPress={() => {addTarefa()}}>
-          <Text style={styles.formButtonText}>Adicionar</Text>
-        </TouchableOpacity>
-      </View>
-      
+          <TouchableOpacity style={styles.formButton} onPress={() => {addTarefa()}}>
+            <Text style={styles.formButtonText}>Adicionar</Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
       <NavBar navigation={navigation}></NavBar>
       
     </SafeAreaView>
