@@ -46,7 +46,7 @@ export function TarefasScreen({navigation}) {
       return
     }
 
-    const API_URL = `http://127.0.0.1:3000/tarefas/${item.idTarefa}`;
+    const API_URL = `https://tasklist-backend-t8ce.onrender.com/tarefas/${item.idTarefa}`;
     const idUsuario = await getIdUsuario()
 
     try {
