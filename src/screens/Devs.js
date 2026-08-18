@@ -4,29 +4,31 @@ import { Linking, StyleSheet, Text, View, FlatList, ActivityIndicator, SafeAreaV
 
 import axios from 'axios';
 
-import {styles} from '../styles/DevsStyles';
-import { geralStyles } from '../styles/GeralStyles';
+import {styles} from '../styles/Devs_Style';
+import { geralStyles } from '../styles/TopBar_Style';
 
 import { useFonts, Inter_700Bold } from '@expo-google-fonts/inter';
+import { NavBar } from '../component/NavBar';
+import { TopBar } from '../component/TopBar';
 
 export function DevsScreen({navigation}) {
   const [devs, setDevs] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const [fontsLoaded] = useFonts({Inter_700Bold});
+  const ROUTE = `https://tasklist-backend-t8ce.onrender.com`
 
-  const ROUTE = `http://127.0.0.1:3000`
-  const API_URL = 'http://127.0.0.1:3000/devs'
+  const fetchDevs = async () => {
+    const API_URL = 'https://tasklist-backend-t8ce.onrender.com/devs'
 
-  const fetchDevs = async (id = '') => {
     try {
       const response = await axios.get(API_URL);
-      setDevs(response.data.data); // Salva o JSON no estado
+      setDevs(response.data.saved); 
     } catch (error) {
       setDevs('')
       console.error("Erro ao buscar desenvolvedores:", error);
     } finally {
-      setLoading(false); // Desativa o indicador de carregamento
+      setLoading(false);
     }
   };
 
@@ -38,7 +40,6 @@ export function DevsScreen({navigation}) {
     return null;
   }
 
-  // Renderiza cada item da lista
   const renderItem = ({ item }) => (
     <View style={styles.card}>
       <View style={styles.cardImg}>
@@ -75,19 +76,7 @@ export function DevsScreen({navigation}) {
   return (
     <SafeAreaView style={styles.container}>
 
-      <View style={geralStyles.topBar}>
-        <View style={geralStyles.homeBar}>
-          <TouchableOpacity onPress={() => navigation.navigate("Menu")}>
-          <Image
-            source={require('../assets/images/home.png')}
-            style={geralStyles.homeImg}
-          />
-          </TouchableOpacity>
-        </View>
-        <View style={geralStyles.innerTop2}>
-          <Text style={geralStyles.topBarText}>Devs</Text>
-        </View>
-      </View>
+      <TopBar title={"Devs"}></TopBar>
     
       <FlatList
         data={devs}
@@ -95,6 +84,9 @@ export function DevsScreen({navigation}) {
         renderItem={renderItem}
         contentContainerStyle={styles.list}
       />
+
+      <NavBar navigation={navigation}></NavBar>
+            
     </SafeAreaView>
   );
 }

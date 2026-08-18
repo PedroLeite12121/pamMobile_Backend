@@ -7,9 +7,10 @@ import { UsuariosScreen } from './screens/Usuarios';
 
 import { TarefasScreen } from './screens/Tarefas';
 import { DevsScreen } from './screens/Devs';
-import { MenuScreen } from './screens/Menu';
 import { LoginScreen } from './screens/Login';
 import { CadastroScreen } from './screens/Cadastro'
+import { ConfigScreen} from './screens/Config'
+import { AddTarefasScreen } from './screens/AdicionarTarefa'
 const Stack = createStackNavigator();
 
 export function Navigation() {
@@ -27,26 +28,29 @@ export function Navigation() {
           options={{headerShown: false}}
         />
         <Stack.Screen
-          name="Menu"
-          component={MenuScreen}
-          options={{ headerShown: false }}
-        />
-
-        <Stack.Screen
           name="Usuarios"
           component={UsuariosScreen}
           options={{ headerShown: false }}
         />
-
         <Stack.Screen
           name="Tarefas"
           component={TarefasScreen}
           options={{ headerShown: false }}
         />
-
+        <Stack.Screen
+          name="Add_Tarefas"
+          component={AddTarefasScreen}
+          options={{ headerShown: false }}
+        />
         <Stack.Screen
           name="Devs"
           component={DevsScreen}
+          options={{ headerShown: false }}
+        />
+
+        <Stack.Screen
+          name="Config"
+          component={ConfigScreen}
           options={{ headerShown: false }}
         />
 

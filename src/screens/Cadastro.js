@@ -4,11 +4,12 @@ import { StyleSheet, Text, View, FlatList, ActivityIndicator, SafeAreaView, Touc
 
 import axios from 'axios';
 
-import {styles} from '../styles/LoginStyles';
-import { geralStyles } from '../styles/GeralStyles';
+import {styles} from '../styles/Login_Style';
+import { geralStyles } from '../styles/TopBar_Style';
 
 import { useFonts, Inter_700Bold } from '@expo-google-fonts/inter';
 
+import { TopBar } from '../component/TopBar';
 import { setToken } from '../services/auth';
 
 export function CadastroScreen({navigation}) {
@@ -26,42 +27,31 @@ export function CadastroScreen({navigation}) {
   const cadastrar = async () => {
     setLoading(true)
 
-    const API_URL = `http://127.0.0.1:3000/usuarios`; 
-    let payload = {nome: nomeForm, usuario: usuarioForm, email: emailForm, senha: senhaForm}
+    const API_URL = `https://tasklist-backend-t8ce.onrender.com/usuarios`; 
     
     try {
+      let payload = {nome: nomeForm, usuario: usuarioForm, email: emailForm, senha: senhaForm}
       const response = await axios.post(API_URL, payload);
-      if (response.status == 201) {
-        const token = response.data.token
-        await setToken(token)
-        navigation.navigate("Menu")
-      }
 
+      if (response.status == 201) {
+        const token = response.data.saved.token
+        await setToken(token)
+
+        navigation.navigate("Tarefas")
+      }
     } catch (error) {
-      const message =
-      error.response?.data?.message ||
-      "Erro";
+      const message = error.response?.data?.message || "Erro";
 
       setErrorMsg(message);
       console.error("Erro ao buscar clientes:", error);
     } finally {
-      setLoading(false); // Desativa o indicador de carregamento
+      setLoading(false); 
     }
   };
-
 
   if (!fontsLoaded) {
     return null;
   }
-
-  // Renderiza cada item da lista
-  const renderItem = ({ item }) => (
-    <View style={styles.card}>
-      <Text style={styles.name}>{item.nome}</Text>
-      <Text style={styles.details}>Função: {item.funcao}</Text>
-      <Text style={styles.details}>Frase: {item.frase}</Text>
-    </View>
-  );
 
   if (loading) {
     return (
@@ -73,14 +63,11 @@ export function CadastroScreen({navigation}) {
 
   return (
     <SafeAreaView style={styles.container}>
-        <View style={geralStyles.topBar}>
-            <View style={geralStyles.innerTop2}>
-                <Text style={geralStyles.topBarText}>Tarefas123</Text>
-            </View>
-        </View>
+
+      <TopBar title={"Tarefas123"}></TopBar>
 
       <View style={styles.innerForm}>
-        
+            
         <Text style={styles.boxTitle}>Nome e Sobrenome</Text>
         <TextInput
           onChangeText={novoTexto => setNome(novoTexto)}
@@ -109,10 +96,9 @@ export function CadastroScreen({navigation}) {
           defaultValue={senhaForm} 
           style={styles.textBox}
         />
-        <TouchableOpacity style={styles.opcaoEntrada} onPress={() => {
-              navigation.navigate("Login")
-          }}>
-
+        <TouchableOpacity onPress={() => {navigation.navigate("Login")}}
+          style={styles.opcaoEntrada} 
+        >
           <Text style={styles.opcaoEntradaText}>Já tenho uma conta</Text>
         </TouchableOpacity>
 
@@ -122,14 +108,14 @@ export function CadastroScreen({navigation}) {
           </Text>
         )}
 
-        <TouchableOpacity style={styles.formButton} onPress={() => {
-              cadastrar()
-          }}>
-
+        <TouchableOpacity onPress={() => {cadastrar()}}
+          style={styles.formButton} 
+        >
           <Text style={styles.formButtonText}>Cadastrar</Text>
         </TouchableOpacity>
 
       </View>
+
     </SafeAreaView>
   );
 }

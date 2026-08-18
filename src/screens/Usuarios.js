@@ -6,25 +6,45 @@ import {StyleSheet, Text, View, FlatList, ActivityIndicator, SafeAreaView, Touch
 import axios from 'axios';
 
 import { useFonts, Inter_700Bold } from '@expo-google-fonts/inter';
-import {styles} from '../styles/TabelasStyles';
-import { geralStyles } from '../styles/GeralStyles';
+
+import {styles} from '../styles/Usuarios_Style';
+import { geralStyles } from '../styles/TopBar_Style';
+
+import { NavBar } from '../component/NavBar';
+import { TopBar } from '../component/TopBar';
 
 export function UsuariosScreen({navigation}) {
+  const [allUsuarios, setAllUsuarios] = useState([]);
   const [usuarios, setUsuarios] = useState([]);
+
   const [loading, setLoading] = useState(true);
-  let [idUsuario, setIdUsuario] = useState()
+
+  const [email, setEmail] = useState('')
   
   const [fontsLoaded] = useFonts({Inter_700Bold});
 
-  const fetchUsuarios = async (id = '') => {
-    const API_URL = `http://127.0.0.1:3000/usuarios/${id}`; 
+  const handleSearch = (text) => {
+    setEmail(text);
+
+    const filteredUsuarios = allUsuarios.filter(usuario => usuario.email.includes(text));
+    
+    setUsuarios(filteredUsuarios);
+  }
+
+  const fetchUsuarios = async () => {
+    const API_URL = `https://tasklist-backend-t8ce.onrender.com/usuarios`; 
 
     try {
       const response = await axios.get(API_URL);
+      const data = response.data.saved;
+      
+      setAllUsuarios(data);
+      setUsuarios(data);
 
-      setUsuarios(response.data.data); // Salva o JSON no estado
     } catch (error) {
+      setAllUsuarios('')
       setUsuarios('')
+
       console.error("Erro ao buscar clientes:", error);
     } finally {
       setLoading(false); // Desativa o indicador de carregamento
@@ -34,12 +54,6 @@ export function UsuariosScreen({navigation}) {
   useEffect(() => {
     fetchUsuarios();
   }, []);
-
-  const changeUser = (id) => {
-    if (Number.isInteger(Number(id))) {
-      fetchUsuarios(id)
-    }
-  }
 
   if (!fontsLoaded) {
     return null;
@@ -65,28 +79,16 @@ export function UsuariosScreen({navigation}) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={geralStyles.topBar}>
-        <View style={geralStyles.homeBar}>
-          <TouchableOpacity onPress={() => navigation.navigate("Menu")}>
-          <Image
-            source={require('../assets/images/home.png')}
-            style={geralStyles.homeImg}
-          />
-          </TouchableOpacity>
-        </View>
-        <View style={geralStyles.innerTop2}>
-          <Text style={geralStyles.topBarText}>Usuários</Text>
-        </View>
-      </View>
+      <TopBar title={"Usuarios"}></TopBar>
 
        <TextInput
-        style={styles.input}
-        placeholder="Pesquisar por ID"
-        placeholderTextColor="#999"
+          style={styles.input}
+          placeholder="Pesquisar por Email"
+          placeholderTextColor="#999"
 
-        onChangeText={idUsuario => changeUser(idUsuario)}
-        value={idUsuario}
-      />
+          onChangeText={text => handleSearch(text)}
+          value={email}
+        />
     
       <FlatList
         data={usuarios}
@@ -94,6 +96,8 @@ export function UsuariosScreen({navigation}) {
         renderItem={renderItem}
         contentContainerStyle={styles.list}
       />
+
+      <NavBar navigation={navigation}></NavBar>
     </SafeAreaView>
   );
 }

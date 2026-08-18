@@ -4,12 +4,14 @@ import { StyleSheet, Text, View, FlatList, ActivityIndicator, SafeAreaView, Touc
 
 import axios from 'axios';
 
-import {styles} from '../styles/LoginStyles';
-import { geralStyles } from '../styles/GeralStyles';
-
 import { useFonts, Inter_700Bold } from '@expo-google-fonts/inter';
 
+import {styles} from '../styles/Login_Style';
+import { geralStyles } from '../styles/TopBar_Style';
+
 import { setToken, getToken } from '../services/auth';
+
+import { TopBar } from '../component/TopBar';
 
 export function LoginScreen({navigation}) {
   const [emailForm, setEmail] = useState('');
@@ -24,23 +26,23 @@ export function LoginScreen({navigation}) {
     const token = await getToken("token");
 
     if (token) {
-      navigation.replace("Menu");
+      navigation.replace("Tarefas");
     } 
   };
 
   const login = async () => {
     setLoading(true)
 
-    const API_URL = `http://127.0.0.1:3000/auth/login`; 
+    const API_URL = `https://tasklist-backend-t8ce.onrender.com/auth/login`; 
     let payload = {email: emailForm, senha: senhaForm}
-    console.log(payload)
     
     try {
       const response = await axios.post(API_URL, payload);
       if (response.status == 200) {
-        const token = response.data.token
+        const token = response.data.saved.token
         await setToken(token)
-        navigation.navigate("Menu")
+
+        navigation.navigate("Tarefas")
       }
 
     } catch (error) {
@@ -63,15 +65,6 @@ export function LoginScreen({navigation}) {
     return null;
   }
 
-  // Renderiza cada item da lista
-  const renderItem = ({ item }) => (
-    <View style={styles.card}>
-      <Text style={styles.name}>{item.nome}</Text>
-      <Text style={styles.details}>Função: {item.funcao}</Text>
-      <Text style={styles.details}>Frase: {item.frase}</Text>
-    </View>
-  );
-
   if (loading) {
     return (
       <View style={geralStyles.center}>
@@ -79,17 +72,12 @@ export function LoginScreen({navigation}) {
       </View>
     );
   }
-
+  
   return (
     <SafeAreaView style={styles.container}>
-        <View style={geralStyles.topBar}>
-            <View style={geralStyles.innerTop2}>
-                <Text style={geralStyles.topBarText}>Tarefas123</Text>
-            </View>
-        </View>
+    <TopBar title={"Tarefas123"}></TopBar>
 
       <View style={styles.innerForm}>
-        
 
         <Text style={styles.boxTitle}>Email</Text>
         <TextInput
@@ -106,10 +94,9 @@ export function LoginScreen({navigation}) {
           style={styles.textBox}
         />
         
-        <TouchableOpacity style={styles.opcaoEntrada} onPress={() => {
-              navigation.navigate("Cadastro")
-          }}>
-
+        <TouchableOpacity onPress={() => {navigation.navigate("Cadastro")}}
+          style={styles.opcaoEntrada} 
+        >
           <Text style={styles.opcaoEntradaText}>Criar uma conta</Text>
         </TouchableOpacity>
         
@@ -119,14 +106,14 @@ export function LoginScreen({navigation}) {
           </Text>
         )}
 
-        <TouchableOpacity style={styles.formButton} onPress={() => {
-              login()
-          }}>
-
+        <TouchableOpacity onPress={() => {login()}}
+          style={styles.formButton} 
+        >
           <Text style={styles.formButtonText}>Login</Text>
         </TouchableOpacity>
 
       </View>
+      
     </SafeAreaView>
   );
 }

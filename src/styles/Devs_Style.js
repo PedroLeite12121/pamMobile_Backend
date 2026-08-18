@@ -5,25 +5,8 @@ import {
 
 
 export const styles = StyleSheet.create({
-  input: {
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 2, // Sombra para Android
-    color: 'black',
-    border: 0,
-    backgroundColor: 'white',
-    padding: 10,
-    width: '70vw',
-    textAlign: 'center',
-    marginBottom: 15,
-    fontFamily: 'Inter_700Bold',
-    fontSize: '1.4rem',
-    borderRadius: 10
-  },
-
   container: {
+    paddingBottom: 100,
     alignItems: 'center',
     flex: 1,
     backgroundColor: '#f5f5f5',
@@ -55,8 +38,16 @@ export const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 2, // Sombra para Android
-    width: '90vw'
+    width: '90vw',
+    display: 'flex',
+    flexDirection: 'row',
+    gap: 13,
   },
+
+  cardText: {
+    flex: 1,
+  },
+  
   name: {
     fontSize: 18,
     fontWeight: 'bold',
@@ -64,10 +55,20 @@ export const styles = StyleSheet.create({
     color: '#111',
     marginBottom: 4,
   },
+
   details: {
-    marginLeft: 10,
     marginVertical: 3,
     fontSize: 14,
     color: '#666',
+    flexWrap: 'wrap',
   },
+
+  githubImg: {
+    marginTop: 10,
+    width: 25,
+    height: 25
+  },
+  githubSection: {
+    width: 'fit-content'
+  }
 });
