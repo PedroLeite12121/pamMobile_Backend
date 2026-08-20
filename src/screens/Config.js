@@ -33,7 +33,20 @@ export function ConfigScreen({navigation}) {
         }
       }
       else{
-
+        Alert.alert(
+          "Confirmar Exclusão",
+          `Tem certeza que deseja apagar a sua conta?`,
+          [
+            { text: "Cancelar", style: "cancel" },
+            { text: "Excluir", style: "destructive", onPress: async () => {
+              const response = await axios.delete(API_URL);
+              if (response.status == 200) {
+                await logout(navigation)
+              }
+              }
+            }
+          ]
+        );
       }
     } catch (error) {
         const message = error.response?.data?.message || "Erro";
