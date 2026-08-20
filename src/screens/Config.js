@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, FlatList, ActivityIndicator, ScrollView, SafeAreaView, TouchableOpacity, Image, TextInput} from 'react-native';
+import { StyleSheet, Text, View, FlatList, Platform, ActivityIndicator, ScrollView, SafeAreaView, TouchableOpacity, Image, TextInput} from 'react-native';
 
 import axios from 'axios';
 
@@ -23,9 +23,17 @@ export function ConfigScreen({navigation}) {
     setLoading(true);
     const API_URL = `https://tasklist-backend-t8ce.onrender.com/usuarios/${await getIdUsuario()}`; 
     try {
-      const response = await axios.delete(API_URL);
-      if (response.status == 200) {
-        await logout(navigation)
+      if (Platform.OS === 'web') {
+        const confirmDelete = window.confirm(`Tem certeza que deseja apagar sua conta?`);
+        if (confirmDelete) {
+          const response = await axios.delete(API_URL);
+          if (response.status == 200) {
+            await logout(navigation)
+          }
+        }
+      }
+      else{
+
       }
     } catch (error) {
         const message = error.response?.data?.message || "Erro";
@@ -34,6 +42,7 @@ export function ConfigScreen({navigation}) {
     } finally {
       setLoading(false); // Desativa o indicador de carregamento
     }
+    
   };
 
   if (!fontsLoaded) {

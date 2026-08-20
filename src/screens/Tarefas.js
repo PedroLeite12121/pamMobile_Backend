@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, FlatList, ActivityIndicator, SafeAreaView,TouchableOpacity,Image,TextInput} from 'react-native';
+import { StyleSheet, Text, View, FlatList, ActivityIndicator, Platform, SafeAreaView,TouchableOpacity,Image,TextInput} from 'react-native';
 import { Picker } from 'react-native-web';
 
 import axios from 'axios';
@@ -69,7 +69,25 @@ export function TarefasScreen({navigation}) {
   const handleDelete = async (id) => {
     const API_URL = `https://tasklist-backend-t8ce.onrender.com/tarefas/${id}`;
     try {
-      const response = await axios.delete(API_URL);
+       if (Platform.OS === 'web') {
+        const confirmDelete = window.confirm(`Tem certeza que deseja apagar a tarefa`);
+        if (confirmDelete) {
+          await axios.delete(API_URL);
+        }
+      } else {
+        Alert.alert(
+          "Confirmar Exclusão",
+          `Tem certeza que deseja apagar a tarefa?`,
+          [
+            { text: "Cancelar", style: "cancel" },
+            { text: "Excluir", style: "destructive", onPress: async () => {
+              await axios.delete(API_URL) 
+              fetchTarefas()
+              }
+            }
+          ]
+        );
+      }
     } catch (error) {
       console.error("Erro ao excluir tarefa:", error);
     } finally {
