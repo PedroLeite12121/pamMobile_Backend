@@ -9,7 +9,7 @@ import { useFonts, Inter_700Bold } from '@expo-google-fonts/inter';
 import {styles} from '../styles/Login_Style';
 import { geralStyles } from '../styles/TopBar_Style';
 
-import { setToken, getToken } from '../services/auth';
+import { setToken, getToken, getIdUsuario, checkUserExists } from '../services/auth';
 
 import { TopBar } from '../component/TopBar';
 
@@ -24,10 +24,12 @@ export function LoginScreen({navigation}) {
   
   const checkLogin = async () => {
     const token = await getToken("token");
+    const idUsuario = await getIdUsuario()
 
-    if (token) {
-      navigation.replace("Tarefas");
-    } 
+    if(await checkUserExists(idUsuario) == true) {
+      navigation.navigate("Tarefas")
+    }
+
   };
 
   const login = async () => {
